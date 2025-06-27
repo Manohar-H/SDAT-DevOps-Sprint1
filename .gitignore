@@ -1,3 +1,29 @@
-# Default ignored files
-/shelf/
-/.idea/workspace.xml
+# Maven target dir
+/target/
+
+# IntelliJ IDEA
+/.idea/
+/*.iml
+
+# Mac system files
+.DS_Store
+
+# Logs
+*.log
+
+# Environment files (optional but recommended)
+.env
+
+# MySQL dumps or temp files (if any)
+/*.sql
+*.db
+
+# OS-generated files
+Thumbs.db
+ehthumbs.db
+
+# Compiled class files
+*.class
+
+# Spring Boot devtools restart files
+.spring-boot-devtools.properties
