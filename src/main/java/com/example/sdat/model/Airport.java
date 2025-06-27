@@ -1,6 +1,7 @@
 package com.example.sdat.model;
 
 import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
 public class Airport {
@@ -16,36 +17,28 @@ public class Airport {
     @JoinColumn(name = "city_id")
     private City city;
 
+    @ManyToMany(mappedBy = "airportsUsed")
+    private List<Aircraft> aircrafts;
+
+    @ManyToMany(mappedBy = "airportsUsed")
+    private List<Passenger> passengers;
+
     // Getters and Setters
-    public Long getId() {
-        return id;
-    }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
 
-    public String getName() {
-        return name;
-    }
+    public String getCode() { return code; }
+    public void setCode(String code) { this.code = code; }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    public City getCity() { return city; }
+    public void setCity(City city) { this.city = city; }
 
-    public String getCode() {
-        return code;
-    }
+    public List<Aircraft> getAircrafts() { return aircrafts; }
+    public void setAircrafts(List<Aircraft> aircrafts) { this.aircrafts = aircrafts; }
 
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public City getCity() {
-        return city;
-    }
-
-    public void setCity(City city) {
-        this.city = city;
-    }
+    public List<Passenger> getPassengers() { return passengers; }
+    public void setPassengers(List<Passenger> passengers) { this.passengers = passengers; }
 }
