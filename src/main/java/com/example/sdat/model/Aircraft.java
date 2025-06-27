@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 
+import java.util.List;
+
 @Entity
 public class Aircraft {
 
@@ -20,36 +22,33 @@ public class Aircraft {
     @Min(1)
     private int numberOfPassengers;
 
+    @ManyToMany(mappedBy = "aircrafts")
+    private List<Passenger> passengers;
+
+    @ManyToMany
+    @JoinTable(
+            name = "aircraft_airport",
+            joinColumns = @JoinColumn(name = "aircraft_id"),
+            inverseJoinColumns = @JoinColumn(name = "airport_id")
+    )
+    private List<Airport> airportsUsed;
+
     // Getters and Setters
-    public Long getId() {
-        return id;
-    }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public String getType() { return type; }
+    public void setType(String type) { this.type = type; }
 
-    public String getType() {
-        return type;
-    }
+    public String getAirlineName() { return airlineName; }
+    public void setAirlineName(String airlineName) { this.airlineName = airlineName; }
 
-    public void setType(String type) {
-        this.type = type;
-    }
+    public int getNumberOfPassengers() { return numberOfPassengers; }
+    public void setNumberOfPassengers(int numberOfPassengers) { this.numberOfPassengers = numberOfPassengers; }
 
-    public String getAirlineName() {
-        return airlineName;
-    }
+    public List<Passenger> getPassengers() { return passengers; }
+    public void setPassengers(List<Passenger> passengers) { this.passengers = passengers; }
 
-    public void setAirlineName(String airlineName) {
-        this.airlineName = airlineName;
-    }
-
-    public int getNumberOfPassengers() {
-        return numberOfPassengers;
-    }
-
-    public void setNumberOfPassengers(int numberOfPassengers) {
-        this.numberOfPassengers = numberOfPassengers;
-    }
+    public List<Airport> getAirportsUsed() { return airportsUsed; }
+    public void setAirportsUsed(List<Airport> airportsUsed) { this.airportsUsed = airportsUsed; }
 }
