@@ -15,9 +15,14 @@ public class City {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
     private String name;
-    private String state;
+
+    @Min(1)
     private int population;
+
+    @NotBlank
+    private String state;
 
     //@OneToMany(mappedBy = "city", cascade = CascadeType.ALL)
     //private List<Airport> airports;
