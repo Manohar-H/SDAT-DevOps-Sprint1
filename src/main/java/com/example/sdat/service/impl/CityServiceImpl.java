@@ -4,16 +4,19 @@ import com.example.sdat.exception.CityNotFoundException;
 import com.example.sdat.model.City;
 import com.example.sdat.repository.CityRepository;
 import com.example.sdat.service.CityService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class CityServiceImpl implements CityService {
 
     private final CityRepository cityRepository;
+
+    // 💡 Inject CityRepository via constructor
+    public CityServiceImpl(CityRepository cityRepository) {
+        this.cityRepository = cityRepository;
+    }
 
     @Override
     public List<City> getAllCities() {
@@ -23,7 +26,7 @@ public class CityServiceImpl implements CityService {
     @Override
     public City getCity(Long id) {
         return cityRepository.findById(id)
-                .orElseThrow(() -> new CityNotFoundException(id));
+                .orElseThrow(() -> new CityNotFoundException("City not found with id: " + id));
     }
 
     @Override
@@ -42,9 +45,7 @@ public class CityServiceImpl implements CityService {
 
     @Override
     public void deleteCity(Long id) {
-        if (!cityRepository.existsById(id)) {
-            throw new CityNotFoundException(id);
-        }
-        cityRepository.deleteById(id);
+        City city = getCity(id);
+        cityRepository.delete(city);
     }
 }
