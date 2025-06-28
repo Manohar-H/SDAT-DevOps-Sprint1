@@ -27,7 +27,7 @@ public class QueryController {
     // 2. What aircraft has each passenger flown on?
     @GetMapping("/aircrafts-by-passenger")
     public Map<String, List<String>> getAircraftsByPassenger() {
-        return queryService.getAircraftsByPassenger();
+        return queryService.getAircraftByPassenger();
     }
 
     // 3. What airports do aircraft take off from and land at?

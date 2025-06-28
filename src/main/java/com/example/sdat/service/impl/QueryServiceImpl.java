@@ -35,22 +35,31 @@ public class QueryServiceImpl implements QueryService {
 
     @Override
     public Map<String, List<String>> getAirportsByCity() {
-        return airportRepository.findAll().stream()
-                .collect(Collectors.groupingBy(
-                        airport -> airport.getCity().getName(),
-                        Collectors.mapping(Airport::getName, Collectors.toList())
-                ));
+        Map<String, List<String>> result = new HashMap<>();
+
+        cityRepository.findAll().forEach(city -> {
+            List<String> airports = city.getAirports().stream()
+                    .map(Airport::getName)
+                    .collect(Collectors.toList());
+            result.put(city.getName(), airports);
+        });
+
+        System.out.println("[DEBUG] getAirportsByCity: " + result);
+        return result;
     }
 
     @Override
-    public Map<String, List<String>> getAircraftsByPassenger() {
-        return passengerRepository.findAll().stream()
+    public Map<String, List<String>> getAircraftByPassenger() {
+        Map<String, List<String>> result = passengerRepository.findAll().stream()
                 .collect(Collectors.toMap(
                         p -> p.getFirstName() + " " + p.getLastName(),
-                        p -> p.getAircrafts().stream()
+                        p -> p.getAircraft().stream()
                                 .map(a -> a.getAirlineName() + " - " + a.getType())
                                 .collect(Collectors.toList())
                 ));
+
+        System.out.println("[DEBUG] getAircraftByPassenger: " + result);
+        return result;
     }
 
     @Override
@@ -58,9 +67,7 @@ public class QueryServiceImpl implements QueryService {
         return aircraftRepository.findAll().stream()
                 .collect(Collectors.toMap(
                         a -> a.getAirlineName() + " - " + a.getType(),
-                        a -> a.getAirportsUsed().stream()
-                                .map(Airport::getName)
-                                .collect(Collectors.toList())
+                        a -> a.getOperatedAirports().stream().map(Airport::getName).collect(Collectors.toList())
                 ));
     }
 
@@ -69,11 +76,7 @@ public class QueryServiceImpl implements QueryService {
         return passengerRepository.findAll().stream()
                 .collect(Collectors.toMap(
                         p -> p.getFirstName() + " " + p.getLastName(),
-                        p -> p.getAircrafts().stream()
-                                .flatMap(a -> a.getAirportsUsed().stream())
-                                .map(Airport::getName)
-                                .distinct()
-                                .collect(Collectors.toList())
+                        p -> p.getVisitedAirports().stream().map(Airport::getName).distinct().collect(Collectors.toList())
                 ));
     }
 }

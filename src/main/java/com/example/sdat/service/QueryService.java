@@ -9,7 +9,7 @@ public interface QueryService {
     Map<String, List<String>> getAirportsByCity();
 
     // 2. What aircraft has each passenger flown on?
-    Map<String, List<String>> getAircraftsByPassenger();
+    Map<String, List<String>> getAircraftByPassenger();
 
     // 3. What airports do aircraft take off from and land at?
     Map<String, List<String>> getAirportsByAircraft();
