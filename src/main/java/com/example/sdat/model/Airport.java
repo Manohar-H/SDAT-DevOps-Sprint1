@@ -1,6 +1,8 @@
 package com.example.sdat.model;
 
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -17,11 +19,11 @@ public class Airport {
     @JoinColumn(name = "city_id")
     private City city;
 
-    @ManyToMany(mappedBy = "airportsUsed")
-    private List<Aircraft> aircrafts;
+    @ManyToMany(mappedBy = "airportsVisited")
+    private List<Passenger> passengers = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "airportsUsed")
-    private List<Passenger> passengers;
+    @ManyToMany(mappedBy = "airportsOperated")
+    private List<Aircraft> aircraft = new ArrayList<>();
 
     // Getters and Setters
     public Long getId() { return id; }
@@ -36,8 +38,8 @@ public class Airport {
     public City getCity() { return city; }
     public void setCity(City city) { this.city = city; }
 
-    public List<Aircraft> getAircrafts() { return aircrafts; }
-    public void setAircrafts(List<Aircraft> aircrafts) { this.aircrafts = aircrafts; }
+    public List<Aircraft> getAircraft() { return aircraft; }
+    public void setAircraft(List<Aircraft> aircraft) { this.aircraft = aircraft; }
 
     public List<Passenger> getPassengers() { return passengers; }
     public void setPassengers(List<Passenger> passengers) { this.passengers = passengers; }
